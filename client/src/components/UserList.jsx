@@ -1,6 +1,25 @@
+import { useState } from "react";
 import UserItem from "./UserItem.jsx";
+import { useEffect } from "react";
 
 export default function UserList() {
+    const [users, setUsers] = useState([]);
+
+    useEffect(() => {
+
+        (async function getUsers() {
+            try {
+                const response = await fetch("http://localhost:3030/jsonstore/users");
+                const data = await response.json();
+
+                setUsers(Object.values(data));
+            } catch (error) {
+                alert(error.message);
+            }
+        })()
+
+    }, []);
+
     return (
         <div className="table-wrapper">
             <table className="table">
@@ -60,11 +79,18 @@ export default function UserList() {
                 </thead>
                 <tbody>
                     {/* <!-- Table row component --> */}
-                    <UserItem />
+                    {users.map((user) => <UserItem 
+                                            key={user._id} 
+                                            firstName={user.firstName} 
+                                            lastName={user.lastName}
+                                            email={user.email}
+                                            phoneNumber={user.phoneNumber}
+                                            createdAt={user.createdAt}
+                                        />)}
                 </tbody>
             </table>
 
-            <button className="btn-add btn">Add new user</button>   
+            <button className="btn-add btn">Add new user</button>
         </div>
     );
 }
