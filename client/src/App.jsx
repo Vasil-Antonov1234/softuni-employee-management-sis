@@ -7,39 +7,43 @@ import Pagination from "./Pagination.jsx"
 import CreateUserModal from "./components/CreateUserModal.jsx"
 
 function App() {
-  const [showCreateUser, setShowCreateUser] = useState(false);
+    const [showCreateUser, setShowCreateUser] = useState(false);
 
-  function addUserClickHandler() {
-    setShowCreateUser(true);
-  };
+    function addUserClickHandler() {
+        setShowCreateUser(true);
+    };
 
-  return (
-    <div>
+    function closeCreateUserModal() {
+        setShowCreateUser(false);
+    };
 
-      <Header />
+    return (
+        <div>
 
-      <main className="main">
+            <Header />
 
-        <section className="card users-container">
+            <main className="main">
 
-          <SearchForm />
+                <section className="card users-container">
 
-          <UserList />
+                    <SearchForm />
 
-          <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
+                    <UserList />
 
-          {showCreateUser && <CreateUserModal />}
+                    <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
-          <Pagination />
+                    {showCreateUser && <CreateUserModal onClose={closeCreateUserModal} />}
 
-        </section>
+                    <Pagination />
 
-      </main>
+                </section>
 
-      <Footer />
+            </main>
 
-    </div>
-  )
+            <Footer />
+
+        </div>
+    )
 }
 
 export default App
