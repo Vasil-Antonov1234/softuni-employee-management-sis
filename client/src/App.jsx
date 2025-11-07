@@ -5,11 +5,13 @@ import SearchForm from "./components/SearchForm.jsx"
 import UserList from "./components/UserList.jsx"
 import Pagination from "./Pagination.jsx"
 import CreateUserModal from "./components/CreateUserModal.jsx"
+import DetailsUserModal from "./components/DetailsUserModal.jsx"
 
 function App() {
     const [users, setUsers] = useState([]);
     const [showCreateUser, setShowCreateUser] = useState(false);
     const [forceRefresh, setForceRefresh] = useState(false);
+    const [showDetailsUser, setShowDetailsUser] = useState(false);
 
     useEffect(() => {
 
@@ -32,6 +34,10 @@ function App() {
 
     function closeCreateUserModal() {
         setShowCreateUser(false);
+    };
+
+    function showUserClickDetailsHandler() {
+        setShowDetailsUser(true);
     };
 
     async function addUserSubmitHandler(event) {
@@ -81,7 +87,7 @@ function App() {
 
                     <SearchForm />
 
-                    <UserList users={users} />
+                    <UserList users={users} onShowDetails={showUserClickDetailsHandler} />
 
                     <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
@@ -89,6 +95,8 @@ function App() {
                         onClose={closeCreateUserModal}
                         onSubmit={addUserSubmitHandler}
                     />}
+
+                    {showDetailsUser && <DetailsUserModal />}
 
                     <Pagination />
 

@@ -1,7 +1,8 @@
 import UserItem from "./UserItem.jsx";
 
 export default function UserList({
-    users
+    users,
+    onShowDetails
 }) {
     
     return (
@@ -62,7 +63,7 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => <UserItem {...user} key={user._id} />)}
+                    {users.map((user) => <UserItem {...user} key={user._id} onShowDetails={onShowDetails} />)}
                 </tbody>
             </table>
 
