@@ -17,6 +17,13 @@ function App() {
         setShowCreateUser(false);
     };
 
+    function addUserSubmitHandler(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const userData = Object.fromEntries(formData);
+    };
+
     return (
         <div>
 
@@ -32,7 +39,10 @@ function App() {
 
                     <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
-                    {showCreateUser && <CreateUserModal onClose={closeCreateUserModal} />}
+                    {showCreateUser && <CreateUserModal 
+                                            onClose={closeCreateUserModal} 
+                                            onSubmit={addUserSubmitHandler}    
+                                        />}
 
                     <Pagination />
 
