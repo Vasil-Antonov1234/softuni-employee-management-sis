@@ -17,11 +17,29 @@ function App() {
         setShowCreateUser(false);
     };
 
-    function addUserSubmitHandler(event) {
+    async function addUserSubmitHandler(event) {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        const userData = Object.fromEntries(formData);
+        const { country, city, street, streetNumber, ...userData} = Object.fromEntries(formData);
+        userData.address = {
+            country, 
+            city, 
+            street, 
+            streetNumber
+        };
+
+        const response = await fetch("http://localhost:3030/jsonstore/users", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        })
+
+        const result = await response.json();
+
+        console.log(result);
     };
 
     return (
