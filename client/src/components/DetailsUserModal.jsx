@@ -1,12 +1,15 @@
-export default function DetailsUserModal() {
+export default function DetailsUserModal({
+    userId,
+    onCloseDetails
+}) {
     return (
         <div className="overlay">
-            <div className="backdrop"></div>
+            <div className="backdrop" onClick={onCloseDetails}></div>
             <div className="modal">
                 <div className="detail-container">
                     <header className="headers">
                         <h2>User Detail</h2>
-                        <button className="btn close">
+                        <button className="btn close" onClick={onCloseDetails}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
                                 <path fill="currentColor"
@@ -21,7 +24,7 @@ export default function DetailsUserModal() {
                                 className="image" />
                         </div>
                         <div className="user-details">
-                            <p>User Id: <strong>62bb0c0eda039e2fdccba57b</strong></p>
+                            <p>User Id: <strong>{userId}</strong></p>
                             <p>
                                 Full Name:
                                 <strong> Peter Johnson </strong>

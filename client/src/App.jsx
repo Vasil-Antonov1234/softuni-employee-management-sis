@@ -11,7 +11,7 @@ function App() {
     const [users, setUsers] = useState([]);
     const [showCreateUser, setShowCreateUser] = useState(false);
     const [forceRefresh, setForceRefresh] = useState(false);
-    const [showDetailsUser, setShowDetailsUser] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState(null);
 
     useEffect(() => {
 
@@ -36,8 +36,12 @@ function App() {
         setShowCreateUser(false);
     };
 
-    function showUserClickDetailsHandler() {
-        setShowDetailsUser(true);
+    function showClickUserDetailsHandler(userId) {
+        setSelectedUserId(userId);
+    };
+
+    function closeUserDetailsModalHandler() {
+        setSelectedUserId(null);
     };
 
     async function addUserSubmitHandler(event) {
@@ -70,7 +74,7 @@ function App() {
 
             setForceRefresh(state => !state);
             closeCreateUserModal();
-        } catch (error) {  
+        } catch (error) {
             alert(error.message);
         };
 
@@ -87,16 +91,21 @@ function App() {
 
                     <SearchForm />
 
-                    <UserList users={users} onShowDetails={showUserClickDetailsHandler} />
+                    <UserList users={users} onShowDetails={showClickUserDetailsHandler} />
 
                     <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
-                    {showCreateUser && <CreateUserModal
-                        onClose={closeCreateUserModal}
-                        onSubmit={addUserSubmitHandler}
-                    />}
+                    {showCreateUser &&
+                        <CreateUserModal
+                            onClose={closeCreateUserModal}
+                            onSubmit={addUserSubmitHandler}
+                        />}
 
-                    {showDetailsUser && <DetailsUserModal />}
+                    {selectedUserId &&
+                        <DetailsUserModal
+                            onCloseDetails={closeUserDetailsModalHandler}
+                            userId={selectedUserId}
+                        />}
 
                     <Pagination />
 
