@@ -31,12 +31,12 @@ function App() {
 
     }, [forceRefresh]);
 
+    function forceRefreshHandler() {
+        setForceRefresh(state => !state)
+    }
+
     function addUserClickHandler() {
         setShowCreateUser(true);
-    };
-
-    function closeCreateUserModal() {
-        setShowCreateUser(false);
     };
 
     function showClickUserDetailsHandler(userId) {
@@ -44,19 +44,18 @@ function App() {
         setShowUserDetails(true);
     };
 
-    function closeUserDetailsModalHandler() {
+    function closeUserModalHandlers() {
+        setShowCreateUser(false);
         setShowUserDetails(false);
+        setShowDeleteUser(false);
+        setSelectedUserId(null);
     };
 
     function showClickUserDeleteHandler(userId) {
         setSelectedUserId(userId);
         setShowDeleteUser(true);
     }
-
-    function closeUserDeleteModalHandler() {
-        setShowDeleteUser(false);
-    };
-
+    
     async function addUserSubmitHandler(event) {
         event.preventDefault();
 
@@ -85,8 +84,8 @@ function App() {
 
             console.log(result);
 
-            setForceRefresh(state => !state);
-            closeCreateUserModal();
+            closeUserModalHandlers();
+            forceRefreshHandler();
         } catch (error) {
             alert(error.message);
         };
@@ -110,19 +109,21 @@ function App() {
 
                     {showCreateUser &&
                         <CreateUserModal
-                            onClose={closeCreateUserModal}
+                            onClose={closeUserModalHandlers}
                             onSubmit={addUserSubmitHandler}
                         />}
 
                     {showUserDetails &&
                         <DetailsUserModal
-                            onCloseDetails={closeUserDetailsModalHandler}
+                            onCloseDetails={closeUserModalHandlers}
                             userId={selectedUserId}
                         />}
 
                         {showUserDelete && 
-                            <DeleteUserModal
-                                onCloseDelete={closeUserDeleteModalHandler}
+                            <DeleteUserModal 
+                                onCloseDelete={closeUserModalHandlers}
+                                onRefresh={forceRefreshHandler}
+                                userId={selectedUserId}
                             />}
 
                     <Pagination />
