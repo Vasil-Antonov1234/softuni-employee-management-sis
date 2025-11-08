@@ -6,12 +6,15 @@ import UserList from "./components/UserList.jsx"
 import Pagination from "./Pagination.jsx"
 import CreateUserModal from "./components/CreateUserModal.jsx"
 import DetailsUserModal from "./components/DetailsUserModal.jsx"
+import DeleteUserModal from "./components/DeleteUserModal.jsx"
 
 function App() {
     const [users, setUsers] = useState([]);
     const [showCreateUser, setShowCreateUser] = useState(false);
     const [forceRefresh, setForceRefresh] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
+    const [showUserDetails, setShowUserDetails] = useState(false);
+    const [showUserDelete, setShowDeleteUser] = useState(false);
 
     useEffect(() => {
 
@@ -38,10 +41,20 @@ function App() {
 
     function showClickUserDetailsHandler(userId) {
         setSelectedUserId(userId);
+        setShowUserDetails(true);
     };
 
     function closeUserDetailsModalHandler() {
-        setSelectedUserId(null);
+        setShowUserDetails(false);
+    };
+
+    function showClickUserDeleteHandler(userId) {
+        setSelectedUserId(userId);
+        setShowDeleteUser(true);
+    }
+
+    function closeUserDeleteModalHandler() {
+        setShowDeleteUser(false);
     };
 
     async function addUserSubmitHandler(event) {
@@ -91,7 +104,7 @@ function App() {
 
                     <SearchForm />
 
-                    <UserList users={users} onShowDetails={showClickUserDetailsHandler} />
+                    <UserList users={users} onShowDetails={showClickUserDetailsHandler} onShowDelete={showClickUserDeleteHandler} />
 
                     <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
 
@@ -101,11 +114,16 @@ function App() {
                             onSubmit={addUserSubmitHandler}
                         />}
 
-                    {selectedUserId &&
+                    {showUserDetails &&
                         <DetailsUserModal
                             onCloseDetails={closeUserDetailsModalHandler}
                             userId={selectedUserId}
                         />}
+
+                        {showUserDelete && 
+                            <DeleteUserModal
+                                onCloseDelete={closeUserDeleteModalHandler}
+                            />}
 
                     <Pagination />
 

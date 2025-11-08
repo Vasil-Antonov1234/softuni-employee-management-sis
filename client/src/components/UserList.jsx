@@ -2,8 +2,9 @@ import UserItem from "./UserItem.jsx";
 
 export default function UserList({
     users,
-    onShowDetails
-}) {
+    onShowDetails,
+    onShowDelete
+}) { 
     
     return (
         <div className="table-wrapper">
@@ -63,7 +64,7 @@ export default function UserList({
                     </tr>
                 </thead>
                 <tbody>
-                    {users.map((user) => <UserItem {...user} key={user._id} onShowDetails={onShowDetails} />)}
+                    {users.map((user) => <UserItem {...user} key={user._id} onShowDetails={onShowDetails} onShowDelete={onShowDelete} />)}
                 </tbody>
             </table>
 
