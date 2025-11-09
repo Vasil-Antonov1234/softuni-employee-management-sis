@@ -16,6 +16,7 @@ function App() {
     const [showUserDetails, setShowUserDetails] = useState(false);
     const [showUserDelete, setShowDeleteUser] = useState(false);
     const [showUserEdit, setShowUserEdit] = useState(false);
+    const [isAscendingSort, setIsAscendingSort] = useState(true);
 
     useEffect(() => {
 
@@ -41,7 +42,16 @@ function App() {
     };
 
     function sortUsersClickHandler() {
-        setUsers(state => state.slice().sort((userA, userB) => new Date(userB.createdAt) - new Date(userA.createdAt)));
+
+        if (isAscendingSort) {
+            setUsers(state => state.slice().sort((userA, userB) => new Date(userB.createdAt) - new Date(userA.createdAt)));
+        }
+
+        if (!isAscendingSort) {
+            setUsers(state => state.slice().sort((userA, userB) => new Date(userA.createdAt) - new Date(userB.createdAt)));
+        }
+
+        setIsAscendingSort(state => !state);
     };
 
     function editActionClickHandler(userId) {
