@@ -4,7 +4,8 @@ export default function UserList({
     users,
     onShowDetails,
     onShowDelete,
-    onEditClick
+    onEditClick,
+    onSort
 }) { 
     
     return (
@@ -51,7 +52,7 @@ export default function UserList({
                                 </path>
                             </svg>
                         </th>
-                        <th>
+                        <th onClick={onSort}>
                             Created
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="arrow-down"
                                 className="icon active-icon svg-inline--fa fa-arrow-down Table_icon__+HHgn" role="img"

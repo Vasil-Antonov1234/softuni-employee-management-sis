@@ -40,6 +40,10 @@ function App() {
         setShowCreateUser(true);
     };
 
+    function sortUsersClickHandler() {
+        setUsers(state => state.slice().sort((userA, userB) => new Date(userB.createdAt) - new Date(userA.createdAt)));
+    };
+
     function editActionClickHandler(userId) {
         setSelectedUserId(userId);
         setShowUserEdit(true);
@@ -137,6 +141,7 @@ function App() {
                         onShowDetails={showClickUserDetailsHandler}
                         onShowDelete={showClickUserDeleteHandler}
                         onEditClick={editActionClickHandler}
+                        onSort={sortUsersClickHandler}
                     />
 
                     <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
