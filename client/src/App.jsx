@@ -76,10 +76,9 @@ function App() {
         };
 
         if (isEditUser) {
-            userData.createdAt = new Date().toISOString();
+            userData.updatedAt = new Date().toISOString();
         };
-
-        userData.updatedAt = new Date().toISOString();
+        userData.createdAt = new Date().toISOString();
 
         if (!isEditUser) {
             try {
