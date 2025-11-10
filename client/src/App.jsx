@@ -3,7 +3,7 @@ import Footer from "./components/Footer.jsx"
 import Header from "./components/Header.jsx"
 import SearchForm from "./components/SearchForm.jsx"
 import UserList from "./components/UserList.jsx"
-import Pagination from "./Pagination.jsx"
+import Pagination from "./components/Pagination.jsx"
 import SaveUserModal from "./components/SaveUserModal.jsx"
 import DetailsUserModal from "./components/DetailsUserModal.jsx"
 import DeleteUserModal from "./components/DeleteUserModal.jsx"
@@ -14,21 +14,29 @@ function App() {
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isAscendingSort, setIsAscendingSort] = useState(true);
     const [isActiveModal, setIsActiveModal] = useState({});
+    const [pageSize, setPageSize] = useState(5);
 
     useEffect(() => {
 
         (async function getUsers() {
             try {
-                const response = await fetch("http://localhost:3030/jsonstore/users");
+                const response = await fetch("http://localhost:3030/jsonstore/users?offset=10&pageSize=5");
                 const data = await response.json();
+                const allUsers = Object.values(data);
+                const firstPage = allUsers.slice(0, pageSize)
+                const pagesCount = Math.ceil(allUsers.length / pageSize);
 
-                setUsers(Object.values(data));
+                setUsers(firstPage);
             } catch (error) {
                 alert(error.message);
             }
         })()
 
-    }, [forceRefresh]);
+    }, [forceRefresh, pageSize]);
+
+    function selectPageSizeHandler(value) {
+        setPageSize(value);
+    };
 
 
     function changeModalStateHandler(userId, currentState) {
@@ -173,7 +181,7 @@ function App() {
                             isEditUser
                         />}
 
-                    <Pagination />
+                    <Pagination onSelect={selectPageSizeHandler} />
 
                 </section>
 
