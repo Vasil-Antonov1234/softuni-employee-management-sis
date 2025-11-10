@@ -1,7 +1,9 @@
 export default function Pagination({
     onSelect,
     onNextPage,
-    onPreviouysPage
+    onPreviouysPage,
+    onFirstPage,
+    onLastPage
 }) {
     return (
         <div className="pagination position">
@@ -16,7 +18,7 @@ export default function Pagination({
             </div>
             <p className="pages">1 - 1 of 1</p>
             <div className="actions">
-                <button className="btn" title="First Page">
+                <button className="btn" title="First Page" onClick={onFirstPage}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-left"
                         className="svg-inline--fa fa-angles-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                         <path fill="currentColor"
@@ -42,7 +44,7 @@ export default function Pagination({
                     </svg>
                 </button>
 
-                <button className="btn" title="Last Page">
+                <button className="btn" title="Last Page" onClick={onLastPage}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angles-right"
                         className="svg-inline--fa fa-angles-right" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 448 512">

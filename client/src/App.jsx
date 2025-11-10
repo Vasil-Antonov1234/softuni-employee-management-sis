@@ -56,6 +56,13 @@ function App() {
         }
     };
 
+    function firstPageClickHandler() {
+        setCurrentPage(1);
+    };
+
+    function lastPageClickHandler() {
+        setCurrentPage(pages);
+    };
 
     function changeModalStateHandler(userId, currentState) {
 
@@ -203,6 +210,8 @@ function App() {
                         onSelect={selectPageSizeHandler}
                         onNextPage={nextPageClickHandler}
                         onPreviouysPage={previousPageClickHandler}
+                        onFirstPage={firstPageClickHandler}
+                        onLastPage={lastPageClickHandler}
                     />
 
                 </section>
