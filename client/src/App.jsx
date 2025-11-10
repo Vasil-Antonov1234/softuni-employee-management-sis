@@ -10,13 +10,10 @@ import DeleteUserModal from "./components/DeleteUserModal.jsx"
 
 function App() {
     const [users, setUsers] = useState([]);
-    const [showCreateUser, setShowCreateUser] = useState(false);
     const [forceRefresh, setForceRefresh] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
-    const [showUserDetails, setShowUserDetails] = useState(false);
-    const [showUserDelete, setShowDeleteUser] = useState(false);
-    const [showUserEdit, setShowUserEdit] = useState(false);
     const [isAscendingSort, setIsAscendingSort] = useState(true);
+    const [isActiveModal, setIsActiveModal] = useState("");
 
     useEffect(() => {
 
@@ -32,15 +29,24 @@ function App() {
         })()
 
     }, [forceRefresh]);
+    
+
+    function changeModalStateHandler(userId, state) {
+        
+        if (state) {
+            setSelectedUserId(userId);
+            setIsActiveModal(state);
+        };
+
+        if (typeof(userId) !== "string") {
+            setIsActiveModal("create");
+        };
+    };
 
     function forceRefreshHandler() {
         setForceRefresh(state => !state)
     }
-
-    function addUserClickHandler() {
-        setShowCreateUser(true);
-    };
-
+   
     function sortUsersClickHandler() {
 
         if (isAscendingSort) {
@@ -54,29 +60,11 @@ function App() {
         setIsAscendingSort(state => !state);
     };
 
-    function editActionClickHandler(userId) {
-        setSelectedUserId(userId);
-        setShowUserEdit(true);
-    };
-
-    function showClickUserDetailsHandler(userId) {
-        setSelectedUserId(userId);
-        setShowUserDetails(true);
-    };
-
     function closeUserModalHandlers() {
-        setShowCreateUser(false);
-        setShowUserDetails(false);
-        setShowDeleteUser(false);
-        setShowUserEdit(false);
+        setIsActiveModal("");
         setSelectedUserId(null);
     };
-
-    function showClickUserDeleteHandler(userId) {
-        setSelectedUserId(userId);
-        setShowDeleteUser(true);
-    }
-
+    
     async function addUserSubmitHandler(event, isEditUser, userId) {
         event.preventDefault();
 
@@ -148,34 +136,34 @@ function App() {
 
                     <UserList
                         users={users}
-                        onShowDetails={showClickUserDetailsHandler}
-                        onShowDelete={showClickUserDeleteHandler}
-                        onEditClick={editActionClickHandler}
+                        onShowDetails={changeModalStateHandler}
+                        onShowDelete={changeModalStateHandler}
+                        onEditClick={changeModalStateHandler}
                         onSort={sortUsersClickHandler}
                     />
 
-                    <button className="btn-add btn" onClick={addUserClickHandler}>Add new user</button>
+                    <button className="btn-add btn" onClick={changeModalStateHandler}>Add new user</button>
 
-                    {showCreateUser &&
+                    {isActiveModal === "create" &&
                         <SaveUserModal
                             onClose={closeUserModalHandlers}
                             onSubmit={addUserSubmitHandler}
                         />}
 
-                    {showUserDetails &&
+                    {isActiveModal === "details" &&
                         <DetailsUserModal
                             onCloseDetails={closeUserModalHandlers}
                             userId={selectedUserId}
                         />}
 
-                    {showUserDelete &&
+                    {isActiveModal === "delete" &&
                         <DeleteUserModal
                             onCloseDelete={closeUserModalHandlers}
                             onRefresh={forceRefreshHandler}
                             userId={selectedUserId}
                         />}
 
-                    {showUserEdit &&
+                    {isActiveModal === "edit" &&
                         <SaveUserModal
                             userId={selectedUserId}
                             onClose={closeUserModalHandlers}
