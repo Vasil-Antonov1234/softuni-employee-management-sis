@@ -25,7 +25,7 @@ export default function UserItem({
             <td>{fromIsoDate(createdAt)}</td>
 
             <td className="actions">
-                <button className="btn edit-btn" title="Edit" onClick={() => onEditClick(_id, "edit")}>
+                <button className="btn edit-btn" title="Edit" onClick={() => onEditClick(_id, {state: "edit"})}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="pen-to-square"
                         className="svg-inline--fa fa-pen-to-square" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 532 512">
@@ -34,7 +34,7 @@ export default function UserItem({
                         </path>
                     </svg>
                 </button>
-                <button className="btn delete-btn" title="Delete" onClick={() => onShowDelete(_id, "delete")} >
+                <button className="btn delete-btn" title="Delete" onClick={() => onShowDelete(_id, {state: "delete", email})} >
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="trash"
                         className="svg-inline--fa fa-trash" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 498 512">
                         <path fill="currentColor"
@@ -42,7 +42,7 @@ export default function UserItem({
                         </path>
                     </svg>
                 </button>
-                <button className="btn info-btn" title="Info" onClick={() => onShowDetails(_id, "details")}>
+                <button className="btn info-btn" title="Info" onClick={() => onShowDetails(_id, {state: "details"})}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info"
                         className="svg-inline--fa fa-info" role="img" xmlns="http://www.w3.org/2000/svg"
                         viewBox="-150 0 512 612">

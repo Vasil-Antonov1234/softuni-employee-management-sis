@@ -1,7 +1,8 @@
 export default function DeleteUserModal({
     onCloseDelete,
     onRefresh,
-    userId
+    userId,
+    userEmail
 }) {
 
     async function deleteUserHandler() {
@@ -23,7 +24,7 @@ export default function DeleteUserModal({
             <div className="modal">
                 <div className="confirm-container">
                     <header className="headers">
-                        <h2>Are you sure you want to delete this account?</h2>
+                        <h2>Are you sure you want to delete {userEmail}?</h2>
                         <button className="btn close" onClick={onCloseDelete}>
                             <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="xmark"
                                 className="svg-inline--fa fa-xmark" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">

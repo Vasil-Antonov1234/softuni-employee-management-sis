@@ -13,7 +13,7 @@ function App() {
     const [forceRefresh, setForceRefresh] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [isAscendingSort, setIsAscendingSort] = useState(true);
-    const [isActiveModal, setIsActiveModal] = useState("");
+    const [isActiveModal, setIsActiveModal] = useState({});
 
     useEffect(() => {
 
@@ -29,24 +29,24 @@ function App() {
         })()
 
     }, [forceRefresh]);
-    
 
-    function changeModalStateHandler(userId, state) {
-        
-        if (state) {
+
+    function changeModalStateHandler(userId, currentState) {
+
+        if (currentState) {
             setSelectedUserId(userId);
-            setIsActiveModal(state);
+            setIsActiveModal(currentState);
         };
 
-        if (typeof(userId) !== "string") {
-            setIsActiveModal("create");
+        if (typeof (userId) !== "string") {
+            setIsActiveModal({state: "create"});
         };
     };
 
     function forceRefreshHandler() {
         setForceRefresh(state => !state)
     }
-   
+
     function sortUsersClickHandler() {
 
         if (isAscendingSort) {
@@ -61,10 +61,10 @@ function App() {
     };
 
     function closeUserModalHandlers() {
-        setIsActiveModal("");
+        setIsActiveModal({});
         setSelectedUserId(null);
     };
-    
+
     async function addUserSubmitHandler(event, isEditUser, userId) {
         event.preventDefault();
 
@@ -144,26 +144,27 @@ function App() {
 
                     <button className="btn-add btn" onClick={changeModalStateHandler}>Add new user</button>
 
-                    {isActiveModal === "create" &&
+                    {isActiveModal.state === "create" &&
                         <SaveUserModal
                             onClose={closeUserModalHandlers}
                             onSubmit={addUserSubmitHandler}
                         />}
 
-                    {isActiveModal === "details" &&
+                    {isActiveModal.state === "details" &&
                         <DetailsUserModal
                             onCloseDetails={closeUserModalHandlers}
                             userId={selectedUserId}
                         />}
 
-                    {isActiveModal === "delete" &&
+                    {isActiveModal.state === "delete" &&
                         <DeleteUserModal
                             onCloseDelete={closeUserModalHandlers}
                             onRefresh={forceRefreshHandler}
                             userId={selectedUserId}
+                            userEmail={isActiveModal.email}
                         />}
 
-                    {isActiveModal === "edit" &&
+                    {isActiveModal.state === "edit" &&
                         <SaveUserModal
                             userId={selectedUserId}
                             onClose={closeUserModalHandlers}
