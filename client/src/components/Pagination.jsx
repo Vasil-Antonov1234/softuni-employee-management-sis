@@ -1,5 +1,7 @@
 export default function Pagination({
-    onSelect
+    onSelect,
+    onNextPage,
+    onPreviouysPage
 }) {
     return (
         <div className="pagination position">
@@ -23,7 +25,7 @@ export default function Pagination({
                     </svg>
                 </button>
 
-                <button className="btn" title="Previous Page">
+                <button className="btn" title="Previous Page" onClick={onPreviouysPage}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-left"
                         className="svg-inline--fa fa-angle-left" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                         <path fill="currentColor"
@@ -31,7 +33,7 @@ export default function Pagination({
                         </path>
                     </svg>
                 </button>
-                <button className="btn" title="Next Page">
+                <button className="btn" title="Next Page" onClick={onNextPage}>
                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right"
                         className="svg-inline--fa fa-angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                         <path fill="currentColor"

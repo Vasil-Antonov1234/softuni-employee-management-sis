@@ -15,6 +15,8 @@ function App() {
     const [isAscendingSort, setIsAscendingSort] = useState(true);
     const [isActiveModal, setIsActiveModal] = useState({});
     const [pageSize, setPageSize] = useState(5);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pages, setPages] = useState(0);
 
     useEffect(() => {
 
@@ -23,19 +25,35 @@ function App() {
                 const response = await fetch("http://localhost:3030/jsonstore/users?offset=10&pageSize=5");
                 const data = await response.json();
                 const allUsers = Object.values(data);
-                const firstPage = allUsers.slice(0, pageSize)
+                const page = allUsers.slice((currentPage - 1) * pageSize, pageSize * currentPage)
                 const pagesCount = Math.ceil(allUsers.length / pageSize);
 
-                setUsers(firstPage);
+                setPages(pagesCount);
+                setUsers(page);
             } catch (error) {
                 alert(error.message);
             }
         })()
 
-    }, [forceRefresh, pageSize]);
+    }, [forceRefresh, pageSize, currentPage]);
 
     function selectPageSizeHandler(value) {
         setPageSize(value);
+    };
+
+    function nextPageClickHandler() {
+
+        if (currentPage + 1 <= pages) {
+            setCurrentPage(state => state + 1);
+        }
+
+    };
+
+    function previousPageClickHandler() {
+
+        if (currentPage - 1 > 0) {
+            setCurrentPage(state => state - 1);
+        }
     };
 
 
@@ -47,7 +65,7 @@ function App() {
         };
 
         if (typeof (userId) !== "string") {
-            setIsActiveModal({state: "create"});
+            setIsActiveModal({ state: "create" });
         };
     };
 
@@ -181,7 +199,11 @@ function App() {
                             isEditUser
                         />}
 
-                    <Pagination onSelect={selectPageSizeHandler} />
+                    <Pagination
+                        onSelect={selectPageSizeHandler}
+                        onNextPage={nextPageClickHandler}
+                        onPreviouysPage={previousPageClickHandler}
+                    />
 
                 </section>
 
