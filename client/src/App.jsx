@@ -22,7 +22,7 @@ function App() {
 
         (async function getUsers() {
             try {
-                const response = await fetch("http://localhost:3030/jsonstore/users?offset=10&pageSize=5");
+                const response = await fetch("http://localhost:3030/jsonstore/users");
                 const data = await response.json();
                 const allUsers = Object.values(data);
                 const page = allUsers.slice((currentPage - 1) * pageSize, pageSize * currentPage)
