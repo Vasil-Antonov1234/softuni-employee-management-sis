@@ -212,6 +212,8 @@ function App() {
                         onPreviouysPage={previousPageClickHandler}
                         onFirstPage={firstPageClickHandler}
                         onLastPage={lastPageClickHandler}
+                        pages={pages}
+                        currentPage={currentPage}
                     />
 
                 </section>
